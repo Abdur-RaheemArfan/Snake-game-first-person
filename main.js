@@ -352,14 +352,21 @@ window.onload = function() {
     mainStartBtn.onclick = function() {
         setDifficulty(difficultySelect.value);
         mainMenu.style.display = 'none';
-        resetGame();
-        startBtn.textContent = 'Restart';
-        clearInterval(intervalId);
-        intervalId = setInterval(update, 60);
+        // Only start the game loop if not already running
+        if (!intervalId) {
+            resetGame();
+            startBtn.textContent = 'Restart';
+            intervalId = setInterval(update, 60);
+        } else {
+            resetGame();
+            startBtn.textContent = 'Restart';
+        }
     };
     retryBtn.onclick = function() {
         gameOverPopup.style.display = 'none';
         mainMenu.style.display = 'flex';
+        clearInterval(intervalId);
+        intervalId = null;
     };
     startBtn.onclick = function() {
         resetGame();
